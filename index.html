@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Amṛta Vāṇī Lecture Catalogue</title>
+  <style>
+    body {
+      font-family: Georgia, serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .header-image {
+      display: block;
+      margin: 10px auto 30px auto;
+      width: 200px;
+      border-radius: 12px;
+    }
+    #searchBox {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background: #333;
+      color: white;
+    }
+    .pagination {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .pagination button {
+      margin: 3px;
+      padding: 8px 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Śrīla Gurudeva's Amṛta Vāṇī Lecture Catalogue</h1>
+  <img src="Gurudeva.jpg" class="header-image" alt="Śrīla Gurudeva">
+  <input type="text" id="searchBox" placeholder="Search by title or code...">
+
+  <table id="lectureTable">
+    <thead>
+      <tr><th>Lecture Code</th><th>Title</th><th>Section</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div class="pagination" id="pagination"></div>
+
+  <script src="data.js"></script>
+  <script>
+    const perPage = 100;
+    let filtered = lectures;
+    let currentPage = 1;
+
+    function renderPage(page) {
+      currentPage = page;
+      const start = (page - 1) * perPage;
+      const end = start + perPage;
+      const slice = filtered.slice(start, end);
+
+      const tbody = document.querySelector("#lectureTable tbody");
+      tbody.innerHTML = slice.map(row => `
+        <tr><td>${row.code}</td><td>${row.title}</td><td>${row.section}</td></tr>
+      `).join("");
+
+      const totalPages = Math.ceil(filtered.length / perPage);
+      const pagin = document.getElementById("pagination");
+      pagin.innerHTML = "";
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i;
+        btn.onclick = () => renderPage(i);
+        if (i === page) btn.style.backgroundColor = "#ff6600";
+        pagin.appendChild(btn);
+      }
+    }
+
+    document.getElementById("searchBox").addEventListener("input", e => {
+      const val = e.target.value.toLowerCase();
+      filtered = lectures.filter(l => (l.title + l.code + l.section).toLowerCase().includes(val));
+      renderPage(1);
+    });
+
+    renderPage(1);
+  </script>
+</body>
+</html>
