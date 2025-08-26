@@ -1,104 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Vāṇī Saṃputa Lecture Catalogue</title>
+  <meta charset="utf-8" />
+  <title>Śrīla Guru Mahārāja Vāṇī Saṃputa Lecture Catalogue</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
-    body {
-      font-family: Georgia, serif;
-      padding: 20px;
+    :root{
+      --bg:#faf9f7; --card:#fff; --ink:#222;
+      --muted:#666; --line:#ece8e2; --brand:#7b2cbf; --accent:#ff7a00;
     }
-    h1 {
-      text-align: center;
-    }
-    .header-image {
-      display: block;
-      margin: 10px auto 30px auto;
-      width: 200px;
-      border-radius: 12px;
-    }
-    #searchBox {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #aaa;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background: #333;
-      color: white;
-    }
-    .pagination {
-      text-align: center;
-      margin-top: 20px;
-    }
-    .pagination button {
-      margin: 3px;
-      padding: 8px 12px;
-    }
+    body{font-family:Georgia,serif;margin:0;background:var(--bg);color:var(--ink)}
+    header{padding:20px;text-align:center}
+    header h1{margin:.2rem 0;font-weight:700}
+    header p{margin:0;color:var(--muted)}
+    .hero img{max-height:160px;border-radius:14px;margin-top:12px}
+    .wrap{max-width:1200px;margin:0 auto;padding:0 12px 48px}
+    .toolbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between;
+      background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:0 0 14px}
+    .left,.right{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+    input[type="search"],select{padding:.65rem .75rem;border:1px solid var(--line);border-radius:10px;min-width:220px;font-size:15px}
+    .badge{color:var(--muted)}
+    table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    th,td{padding:.65rem .8rem;border-bottom:1px solid #f2eee8;text-align:left}
+    th{background:#fcfbfa;font-weight:700}
+    tr:hover td{background:#fdfcfb}
+    code{background:#f3f1ee;padding:.1rem .35rem;border-radius:6px}
+    .muted{color:var(--muted)}
+    .pagination{display:flex;flex-wrap:wrap;gap:.35rem;justify-content:center;margin:14px 0}
+    .pagination button{border:1px solid var(--line);background:#fff;padding:.45rem .7rem;border-radius:10px;cursor:pointer}
+    .pagination button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
   </style>
 </head>
 <body>
-  <h1>Śrīla Guru Mahārāja Vāṇī Saṃputa Lecture Catalogue</h1>
-  <img src="Gurumaharaj.png" class="header-image" alt="Śrīla Gurudeva">
-  <input type="text" id="searchBox" placeholder="Search by title or code...">
+  <header>
+    <h1>Śrīla Guru Mahārāja Vāṇī Saṃputa Lecture Catalogue</h1>
+    <p>A devotional, searchable archive of lectures.</p>
+    <div class="hero">
+      <img src="Gurumaharaj.png" alt="Śrīla Gurudeva">
+    </div>
+  </header>
 
-  <table id="lectureTable">
-    <thead>
-      <tr><th>Lecture Code</th><th>Title</th><th>Section</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <div class="wrap">
+    <div class="toolbar">
+      <div class="left">
+        <input id="q" type="search" placeholder="Search code, scripture, place, title…" />
+        <select id="language"><option value="">All languages</option></select>
+        <select id="section"><option value="">All sections</option></select>
+      </div>
+      <div class="right">
+        <span class="badge">Total: <strong id="count">0</strong></span>
+        <a class="muted" href="https://github.com/YOUR-USERNAME/vani-samputa" target="_blank">GitHub repo →</a>
+      </div>
+    </div>
 
-  <div class="pagination" id="pagination"></div>
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th style="width:7ch">Code</th>
+          <th style="width:11ch">Date</th>
+          <th>Scripture</th>
+          <th style="width:15ch">Place</th>
+          <th>Title</th>
+          <th style="width:10ch">Language</th>
+          <th style="width:12ch">Section</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
+    <div id="pager" class="pagination"></div>
+  </div>
+
+  <!-- load both datasets -->
   <script src="data.js"></script>
+  <script src="haladhar_data.js"></script>
   <script>
-    const perPage = 100;
-    let filtered = lectures;
-    let currentPage = 1;
+    // unify both arrays
+    const DATA = (window.lectures||[]).map(x=>({
+      code:x.code,title:x.title,scripture:"",date:"",place:"",
+      language:"Gour Govinda Swāmī",section:x.section||""
+    })).concat(window.HALADHAR_LECTURES||[]);
 
-    function renderPage(page) {
-      currentPage = page;
-      const start = (page - 1) * perPage;
-      const end = start + perPage;
-      const slice = filtered.slice(start, end);
+    // sort by date desc (fallback code asc)
+    DATA.sort((a,b)=> (b.date||"").localeCompare(a.date||"") || (a.code||"").localeCompare(b.code||""));
 
-      const tbody = document.querySelector("#lectureTable tbody");
-      tbody.innerHTML = slice.map(row => `
-        <tr><td>${row.code}</td><td>${row.title}</td><td>${row.section}</td></tr>
+    const tbody=document.querySelector("#tbl tbody");
+    const countEl=document.querySelector("#count");
+    const q=document.querySelector("#q"), langSel=document.querySelector("#language"), secSel=document.querySelector("#section"), pager=document.querySelector("#pager");
+    const perPage=100; let current=DATA.slice(); let currentPage=1;
+
+    // populate filters
+    [...new Set(DATA.map(r=>r.language).filter(Boolean))].sort().forEach(l=>{
+      const o=document.createElement("option");o.value=l;o.textContent=l;langSel.appendChild(o);
+    });
+    [...new Set(DATA.map(r=>r.section).filter(Boolean))].sort().forEach(s=>{
+      const o=document.createElement("option");o.value=s;o.textContent=s;secSel.appendChild(o);
+    });
+
+    function renderPage(p=1){
+      currentPage=p;
+      const start=(p-1)*perPage, end=start+perPage;
+      tbody.innerHTML=current.slice(start,end).map(r=>`
+        <tr>
+          <td><code>${r.code||""}</code></td>
+          <td>${r.date||""}</td>
+          <td>${r.scripture||""}</td>
+          <td>${r.place||""}</td>
+          <td>${r.title||""}</td>
+          <td>${r.language||""}</td>
+          <td class="muted">${r.section||""}</td>
+        </tr>
       `).join("");
-
-      const totalPages = Math.ceil(filtered.length / perPage);
-      const pagin = document.getElementById("pagination");
-      pagin.innerHTML = "";
-      for (let i = 1; i <= totalPages; i++) {
-        const btn = document.createElement("button");
-        btn.textContent = i;
-        btn.onclick = () => renderPage(i);
-        if (i === page) btn.style.backgroundColor = "#ff6600";
-        pagin.appendChild(btn);
+      countEl.textContent=current.length;
+      const pages=Math.max(1,Math.ceil(current.length/perPage));
+      pager.innerHTML="";
+      for(let i=1;i<=pages;i++){
+        const b=document.createElement("button");
+        b.textContent=i;if(i===p)b.classList.add("active");
+        b.onclick=()=>renderPage(i);pager.appendChild(b);
       }
     }
 
-    document.getElementById("searchBox").addEventListener("input", e => {
-      const val = e.target.value.toLowerCase();
-      filtered = lectures.filter(l => (l.title + l.code + l.section).toLowerCase().includes(val));
+    function applyFilters(){
+      const qq=q.value.toLowerCase(), l=langSel.value, s=secSel.value;
+      current=DATA.filter(r=>{
+        if(l && r.language!==l)return false;
+        if(s && r.section!==s)return false;
+        const blob=[r.code,r.title,r.scripture,r.place,r.section].join(" ").toLowerCase();
+        return !qq || blob.includes(qq);
+      });
       renderPage(1);
-    });
-
-    renderPage(1);
+    }
+    q.addEventListener("input",applyFilters);langSel.addEventListener("change",applyFilters);secSel.addEventListener("change",applyFilters);
+    applyFilters();
   </script>
 </body>
-
 </html>
-
-
