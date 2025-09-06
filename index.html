@@ -2,22 +2,96 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Vāṇī Saṃputa- Lecture Catalogue</title>
+<title>Vāṇī Saṃputa – Lecture Catalogue</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Diacritic-friendly serif fonts -->
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;700;800&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
-  :root{ --ink:#1b1b1b; --muted:#666; --line:#e5e5e5; --accent:#7f56d9; --bg:#fafafa; }
-  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,serif;}
+  :root{
+    --ink:#3c2a1e; 
+    --muted:#775; 
+    --line:#e2d3c0;
+    --accent:#8b2f2a; 
+    --bg:#fdfaf4; 
+    --gold:#d4af37;
+  }
+
+  html,body{
+    margin:0; 
+    background:var(--bg) url("assets/bg.png") center/350px repeat;
+    color:var(--ink);
+    font-family:Georgia,serif;
+  }
+
   .wrap{max-width:1200px;margin:0 auto;padding:22px}
-  h1{font-weight:800;text-align:center;margin:8px 10px 10px;font-size:2.2rem;letter-spacing:.2px}
-  .header-image{display:block;margin:10px auto 22px;width:210px;height:auto;border-radius:14px;box-shadow:0 8px 20px rgba(0,0,0,.15)}
-  .controls{display:grid;grid-template-columns:1fr 220px;gap:12px;margin:12px 0 16px}
-  input,select{padding:12px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:15px}
-  table{width:100%;border-collapse:separate;border-spacing:0 8px}
-  th,td{padding:12px 14px;background:#fff}
-  th{background:#111;color:#fff;font-weight:700;text-align:left}
-  tr{box-shadow:0 2px 8px rgba(0,0,0,.06);border-radius:10px}
+
+  /* Title: use EB Garamond (great diacritics) with Noto Serif fallback */
+  h1{
+    font-family:"EB Garamond","Noto Serif",Georgia,serif;
+    font-weight:800;
+    text-align:center;
+    margin:16px 10px 10px;
+    font-size:2.8rem;
+    color:var(--accent);
+    letter-spacing:.2px;
+  }
+
+  /* Decorative divider instead of a line */
+  .divider{ display:flex; align-items:center; justify-content:center; margin:6px auto 18px; gap:14px; }
+  .divider .line{ height:2px; width:120px; background:linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .divider svg{ width:34px; height:34px; fill:var(--gold); filter: drop-shadow(0 0 2px rgba(212,175,55,.35)); }
+
+  /* Rounded-rectangle framed image */
+  .header-frame{ width:300px; margin:12px auto 26px; padding:9px; border-radius:28px; position:relative;
+    background:linear-gradient(135deg, #d4af37, #f6e8b1 40%, #d4af37);
+    box-shadow:0 10px 24px rgba(164,112,29,0.35), inset 0 1px 0 rgba(255,255,255,.6);
+  }
+  .header-frame img{ display:block; width:100%; height:auto; border-radius:22px; background:#fff; box-shadow:0 4px 18px rgba(0,0,0,.15); }
+
+  .controls{
+    display:grid;
+    grid-template-columns:1fr 220px;
+    gap:12px;
+    margin:12px 0 20px;
+  }
+
+  input,select{
+    padding:12px;
+    border-radius:10px;
+    border:2px solid var(--gold);
+    background:#fffdf8;
+    font-size:15px;
+    font-family:Georgia,serif;
+  }
+  input:focus,select:focus{
+    outline:none; 
+    border-color:var(--accent);
+    box-shadow:0 0 6px var(--accent);
+  }
+
+  table{ width:100%; border-collapse:separate; border-spacing:0 10px; }
+  th,td{ padding:12px 14px; background:#fff }
+  th{
+    background:var(--accent);
+    color:#fff;
+    font-weight:700;
+    text-align:left;
+    text-transform:uppercase;
+    border:2px solid var(--gold);
+  }
+  tr{
+    background:#fffaf0;
+    border:2px solid var(--gold);
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+  }
+  tr:hover td{ background:#fff2e6; transition:0.3s; }
+
   td:first-child,th:first-child{border-radius:10px 0 0 10px;width:110px}
   td:last-child,th:last-child{border-radius:0 10px 10px 0;width:160px}
+
   .muted{color:var(--muted)}
   .pagination{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:14px 0 6px}
   .pagination button{padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer}
@@ -25,12 +99,34 @@
   .pagination .nav{font-weight:600}
   .summary{font-size:13px;color:#555;margin:6px 2px 0;text-align:center}
   .warn{color:#b3261e;font-weight:700;text-align:center;margin-top:10px}
+
+  footer{
+    margin-top:40px;
+    text-align:center;
+    font-family:"EB Garamond","Noto Serif",serif;
+    color:var(--accent);
+    font-size:1.1rem;
+    padding:20px 0;
+    border-top:2px solid var(--gold);
+  }
 </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Vāṇī Saṃputa Lecture Catalogue</h1>
-    <img src="Gurumaharaj3.jpg" alt="Śrīla Gurumaharaj (HH Haladhar Swami Maharaj)" class="header-image" />
+    <h1>Vāṇi Saṃputa Lecture Catalogue</h1>
+    <!-- Decorative lotus divider replacing the old line -->
+    <div class="divider" aria-hidden="true">
+      <span class="line"></span>
+      <svg viewBox="0 0 64 64" role="img" aria-label="lotus divider">
+        <path d="M32 6c4 8 6 14 6 20 6-2 13-5 20-6-4 8-10 12-16 14 4 2 8 5 10 10-6-1-11-3-14-6 0 6-2 12-6 20-4-8-6-14-6-20-3 3-8 5-14 6 2-5 6-8 10-10-6-2-12-6-16-14 7 1 14 4 20 6 0-6 2-12 6-20z"/>
+      </svg>
+      <span class="line"></span>
+    </div>
+
+    <!-- Rounded-rectangle framed image -->
+    <div class="header-frame">
+      <img src="assets/Gurumaharaj3.jpg" alt="Śrīla Gurumaharaj" />
+    </div>
 
     <div class="controls">
       <input id="q" placeholder="Search (Transliterated, Original, or Code)…">
@@ -53,15 +149,18 @@
     <div id="summary" class="summary"></div>
   </div>
 
+  <footer>
+    सर्वे भवन्तु सुखिनः । All glories to Śrī Guru and Gaurāṅga 🌸
+  </footer>
+
   <script>
-  // ---- Robust data loader: try common filenames, detect 'lectures' (const) or window.lectures.
-  const CANDIDATES = ["haladhar_data.js"];
+  const CANDIDATES = ["data_haladhar_v3_clean3.js"];
 
   function getDataset(){
     try {
-      if (typeof lectures !== "undefined" && Array.isArray(lectures)) return lectures; // top-level const
+      if (typeof lectures !== "undefined" && Array.isArray(lectures)) return lectures;
     } catch(_) {}
-    if (Array.isArray(window.lectures)) return window.lectures; // legacy global
+    if (Array.isArray(window.lectures)) return window.lectures;
     return null;
   }
 
@@ -105,7 +204,7 @@
     all.sort((a,b) => Number(a.code) - Number(b.code));
     all.forEach(r => r._q = (r.code + " " + r.title + " " + r.original).toLowerCase());
 
-    const perPage = Math.max(1, Math.ceil(all.length / 10)); // fixed: 10 parts
+    const perPage = Math.max(1, Math.ceil(all.length / 10));
     let filtered = all.slice();
     let currentPage = 1;
 
@@ -182,6 +281,3 @@
   </script>
 </body>
 </html>
-
-
-
