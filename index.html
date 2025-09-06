@@ -1,138 +1,184 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Śrīla Guru Mahārāja Vāṇī Saṃputa Lecture Catalogue</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    :root{
-      --bg:#faf9f7; --card:#fff; --ink:#222;
-      --muted:#666; --line:#ece8e2; --brand:#7b2cbf; --accent:#ff7a00;
-    }
-    body{font-family:Georgia,serif;margin:0;background:var(--bg);color:var(--ink)}
-    header{padding:20px;text-align:center}
-    header h1{margin:.2rem 0;font-weight:700}
-    header p{margin:0;color:var(--muted)}
-    .hero img{max-height:160px;border-radius:14px;margin-top:12px}
-    .wrap{max-width:1200px;margin:0 auto;padding:0 12px 48px}
-    .toolbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between;
-      background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:0 0 14px}
-    .left,.right{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
-    input[type="search"],select{padding:.65rem .75rem;border:1px solid var(--line);border-radius:10px;min-width:220px;font-size:15px}
-    .badge{color:var(--muted)}
-    table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-    th,td{padding:.65rem .8rem;border-bottom:1px solid #f2eee8;text-align:left}
-    th{background:#fcfbfa;font-weight:700}
-    tr:hover td{background:#fdfcfb}
-    code{background:#f3f1ee;padding:.1rem .35rem;border-radius:6px}
-    .muted{color:var(--muted)}
-    .pagination{display:flex;flex-wrap:wrap;gap:.35rem;justify-content:center;margin:14px 0}
-    .pagination button{border:1px solid var(--line);background:#fff;padding:.45rem .7rem;border-radius:10px;cursor:pointer}
-    .pagination button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-  </style>
+<meta charset="utf-8">
+<title>Vāṇī Saṃputa- Lecture Catalogue</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{ --ink:#1b1b1b; --muted:#666; --line:#e5e5e5; --accent:#7f56d9; --bg:#fafafa; }
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,serif;}
+  .wrap{max-width:1200px;margin:0 auto;padding:22px}
+  h1{font-weight:800;text-align:center;margin:8px 10px 10px;font-size:2.2rem;letter-spacing:.2px}
+  .header-image{display:block;margin:10px auto 22px;width:210px;height:auto;border-radius:14px;box-shadow:0 8px 20px rgba(0,0,0,.15)}
+  .controls{display:grid;grid-template-columns:1fr 220px;gap:12px;margin:12px 0 16px}
+  input,select{padding:12px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:15px}
+  table{width:100%;border-collapse:separate;border-spacing:0 8px}
+  th,td{padding:12px 14px;background:#fff}
+  th{background:#111;color:#fff;font-weight:700;text-align:left}
+  tr{box-shadow:0 2px 8px rgba(0,0,0,.06);border-radius:10px}
+  td:first-child,th:first-child{border-radius:10px 0 0 10px;width:110px}
+  td:last-child,th:last-child{border-radius:0 10px 10px 0;width:160px}
+  .muted{color:var(--muted)}
+  .pagination{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:14px 0 6px}
+  .pagination button{padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer}
+  .pagination button.active{background:var(--accent);color:#fff;border-color:transparent}
+  .pagination .nav{font-weight:600}
+  .summary{font-size:13px;color:#555;margin:6px 2px 0;text-align:center}
+  .warn{color:#b3261e;font-weight:700;text-align:center;margin-top:10px}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Śrīla Guru Mahārāja Vāṇī Saṃputa Lecture Catalogue</h1>
-    <p>A devotional, searchable archive of lectures.</p>
-    <div class="hero">
-      <img src="Gurumaharaj.png" alt="Śrīla Gurudeva">
-    </div>
-  </header>
-
   <div class="wrap">
-    <div class="toolbar">
-      <div class="left">
-        <input id="q" type="search" placeholder="Search code, scripture, place, title…" />
-        <select id="language"><option value="">All languages</option></select>
-        <select id="section"><option value="">All sections</option></select>
-      </div>
-      <div class="right">
-        <span class="badge">Total: <strong id="count">0</strong></span>
-        <a class="muted" href="https://github.com/YOUR-USERNAME/vani-samputa" target="_blank">GitHub repo →</a>
-      </div>
+    <h1>Vāṇī Saṃputa Lecture Catalogue</h1>
+    <img src="haladhar.jpg" alt="Śrīla Gurumaharaj (HH Haladhar Swami Maharaj)" class="header-image" />
+
+    <div class="controls">
+      <input id="q" placeholder="Search (Transliterated, Original, or Code)…">
+      <select id="lang">
+        <option value="">All languages</option>
+        <option>English</option><option>Hindi</option><option>Odia</option>
+      </select>
     </div>
 
-    <table id="tbl">
+    <div id="warn" class="warn" style="display:none;"></div>
+
+    <table id="t">
       <thead>
-        <tr>
-          <th style="width:7ch">Code</th>
-          <th style="width:11ch">Date</th>
-          <th>Scripture</th>
-          <th style="width:15ch">Place</th>
-          <th>Title</th>
-          <th style="width:10ch">Language</th>
-          <th style="width:12ch">Section</th>
-        </tr>
+        <tr><th>Code</th><th>Title (English transliterated)</th><th>Language</th></tr>
       </thead>
       <tbody></tbody>
     </table>
 
-    <div id="pager" class="pagination"></div>
+    <div id="pagination" class="pagination"></div>
+    <div id="summary" class="summary"></div>
   </div>
 
-  <!-- load both datasets -->
-  <script src="data.js"></script>
-  <script src="haladhar_data.js"></script>
   <script>
-    // unify both arrays
-    const DATA = (window.lectures||[]).map(x=>({
-      code:x.code,title:x.title,scripture:"",date:"",place:"",
-      language:"Gour Govinda Swāmī",section:x.section||""
-    })).concat(window.HALADHAR_LECTURES||[]);
+  // ---- Robust data loader: try common filenames, detect 'lectures' (const) or window.lectures.
+  const CANDIDATES = ["haladhar_data.js"];
 
-    // sort by date desc (fallback code asc)
-    DATA.sort((a,b)=> (b.date||"").localeCompare(a.date||"") || (a.code||"").localeCompare(b.code||""));
+  function getDataset(){
+    try {
+      if (typeof lectures !== "undefined" && Array.isArray(lectures)) return lectures; // top-level const
+    } catch(_) {}
+    if (Array.isArray(window.lectures)) return window.lectures; // legacy global
+    return null;
+  }
 
-    const tbody=document.querySelector("#tbl tbody");
-    const countEl=document.querySelector("#count");
-    const q=document.querySelector("#q"), langSel=document.querySelector("#language"), secSel=document.querySelector("#section"), pager=document.querySelector("#pager");
-    const perPage=100; let current=DATA.slice(); let currentPage=1;
-
-    // populate filters
-    [...new Set(DATA.map(r=>r.language).filter(Boolean))].sort().forEach(l=>{
-      const o=document.createElement("option");o.value=l;o.textContent=l;langSel.appendChild(o);
-    });
-    [...new Set(DATA.map(r=>r.section).filter(Boolean))].sort().forEach(s=>{
-      const o=document.createElement("option");o.value=s;o.textContent=s;secSel.appendChild(o);
-    });
-
-    function renderPage(p=1){
-      currentPage=p;
-      const start=(p-1)*perPage, end=start+perPage;
-      tbody.innerHTML=current.slice(start,end).map(r=>`
-        <tr>
-          <td><code>${r.code||""}</code></td>
-          <td>${r.date||""}</td>
-          <td>${r.scripture||""}</td>
-          <td>${r.place||""}</td>
-          <td>${r.title||""}</td>
-          <td>${r.language||""}</td>
-          <td class="muted">${r.section||""}</td>
-        </tr>
-      `).join("");
-      countEl.textContent=current.length;
-      const pages=Math.max(1,Math.ceil(current.length/perPage));
-      pager.innerHTML="";
-      for(let i=1;i<=pages;i++){
-        const b=document.createElement("button");
-        b.textContent=i;if(i===p)b.classList.add("active");
-        b.onclick=()=>renderPage(i);pager.appendChild(b);
-      }
+  function loadDataScripts(list, onOk, onFail){
+    let i = 0;
+    function tryNext(){
+      if (i >= list.length){ onFail("Tried: " + list.join(", ")); return; }
+      const src = list[i++];
+      const s = document.createElement("script");
+      s.src = src;
+      s.onload = () => {
+        setTimeout(() => {
+          const data = getDataset();
+          if (data) { onOk(src, data); }
+          else { console.warn("Loaded", src, "but no dataset found in it."); tryNext(); }
+        }, 0);
+      };
+      s.onerror = () => { console.warn("Failed to load", src); tryNext(); };
+      document.head.appendChild(s);
     }
+    tryNext();
+  }
+
+  function startApp(dataset){
+    const tbody = document.querySelector("#t tbody");
+    const pagin = document.getElementById("pagination");
+    const summary = document.getElementById("summary");
+    const q = document.getElementById("q");
+    const lang = document.getElementById("lang");
+    const warn = document.getElementById("warn");
+
+    const pick = r => r.title_latn || r.title_en || r.title || "";
+
+    let all = dataset.map(r => ({
+      code: String(r.code || ""),
+      title: String(pick(r)),
+      original: String(r.title_original || ""),
+      language: String(r.language || "")
+    }));
+
+    all.sort((a,b) => Number(a.code) - Number(b.code));
+    all.forEach(r => r._q = (r.code + " " + r.title + " " + r.original).toLowerCase());
+
+    const perPage = Math.max(1, Math.ceil(all.length / 10)); // fixed: 10 parts
+    let filtered = all.slice();
+    let currentPage = 1;
 
     function applyFilters(){
-      const qq=q.value.toLowerCase(), l=langSel.value, s=secSel.value;
-      current=DATA.filter(r=>{
-        if(l && r.language!==l)return false;
-        if(s && r.section!==s)return false;
-        const blob=[r.code,r.title,r.scripture,r.place,r.section].join(" ").toLowerCase();
-        return !qq || blob.includes(qq);
-      });
-      renderPage(1);
+      const needle = q.value.trim().toLowerCase();
+      const L = lang.value;
+      filtered = all.filter(r => (!L || r.language === L) && (!needle || r._q.includes(needle)));
     }
-    q.addEventListener("input",applyFilters);langSel.addEventListener("change",applyFilters);secSel.addEventListener("change",applyFilters);
-    applyFilters();
+
+    function renderPage(page=1){
+      currentPage = page;
+      const start = (page - 1) * perPage, end = start + perPage;
+      const slice = filtered.slice(start, end);
+
+      tbody.textContent = "";
+      const frag = document.createDocumentFragment();
+      if (slice.length === 0){
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 3; td.className="muted"; td.textContent = "No matches.";
+        tr.appendChild(td); frag.appendChild(tr);
+      } else {
+        for (const r of slice){
+          const tr = document.createElement("tr");
+          const tdC = document.createElement("td"); tdC.textContent = r.code;
+          const tdT = document.createElement("td"); tdT.textContent = r.title;
+          const tdL = document.createElement("td"); tdL.textContent = r.language;
+          tr.append(tdC, tdT, tdL); frag.appendChild(tr);
+        }
+      }
+      tbody.appendChild(frag);
+
+      const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
+      pagin.textContent = "";
+      const addBtn = (label, target, cls="") => {
+        const b = document.createElement("button");
+        b.textContent = label; if (cls) b.className = cls;
+        b.disabled = target === currentPage || target < 1 || target > totalPages;
+        b.addEventListener("click", () => renderPage(target));
+        pagin.appendChild(b);
+      };
+      addBtn("« Prev", currentPage - 1, "nav");
+      for (let i=1; i<=totalPages; i++){
+        const b = document.createElement("button"); b.textContent = i;
+        if (i===currentPage) b.className="active";
+        b.addEventListener("click", ()=>renderPage(i)); pagin.appendChild(b);
+      }
+      addBtn("Next »", currentPage + 1, "nav");
+
+      summary.textContent = `Showing ${slice.length} of ${filtered.length} (page ${currentPage} of ${totalPages}; ${perPage} per page)`;
+      warn.style.display = "none";
+    }
+
+    function debounce(fn, ms=150){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
+    const refresh = ()=>{ applyFilters(); renderPage(1); };
+    q.addEventListener("input", debounce(refresh,150));
+    lang.addEventListener("change", refresh);
+
+    applyFilters(); renderPage(1);
+  }
+
+  function showWarn(msg){
+    const w = document.getElementById("warn");
+    w.style.display = "block";
+    w.textContent = "No dataset found: " + msg;
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    loadDataScripts(CANDIDATES,
+      (srcOk, data)=>{ console.log("Using", srcOk, "length:", data.length); startApp(data); },
+      (why)=>{ console.error("Dataset not found.", why); showWarn("window/const 'lectures' not defined. " + why); }
+    );
+  });
   </script>
 </body>
 </html>
