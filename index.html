@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<h1>Vāṇi Saṃputa Lecture Catalogue</h1>
-<p class="subtitle">His Holiness Halādhara Swāmī Mahārāja</p>
+<title>Vāṇī Saṃputa Lecture Catalogue</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Diacritic-friendly serif fonts -->
@@ -28,46 +27,38 @@
 
   .wrap{max-width:1200px;margin:0 auto;padding:22px}
 
-  /* Title: use EB Garamond (great diacritics) with Noto Serif fallback */
   h1{
     font-family:"EB Garamond","Noto Serif",Georgia,serif;
     font-weight:800;
     text-align:center;
-    margin:16px 10px 10px;
+    margin:16px 10px 6px;
     font-size:2.8rem;
     color:var(--accent);
     letter-spacing:.2px;
-  }
-
-  /* Decorative divider instead of a line */
-  .divider{ display:flex; align-items:center; justify-content:center; margin:6px auto 18px; gap:14px; }
-  .divider .line{ height:2px; width:120px; background:linear-gradient(90deg, transparent, var(--gold), transparent); }
-  .divider svg{ width:34px; height:34px; fill:var(--gold); filter: drop-shadow(0 0 2px rgba(212,175,55,.35)); }
-
-  /* Rounded-rectangle framed image */
-  .header-frame{ width:300px; margin:12px auto 26px; padding:9px; border-radius:28px; position:relative;
-    background:linear-gradient(135deg, #d4af37, #f6e8b1 40%, #d4af37);
-    box-shadow:0 10px 24px rgba(164,112,29,0.35), inset 0 1px 0 rgba(255,255,255,.6);
-  }
-  .header-frame img{ display:block; width:100%; height:auto; border-radius:22px; background:#fff; box-shadow:0 4px 18px rgba(0,0,0,.15); }
-
-  .controls{
-    display:grid;
-    grid-template-columns:1fr 220px;
-    gap:12px;
-    margin:12px 0 20px;
   }
 
   .subtitle {
     font-family:"EB Garamond","Noto Serif",Georgia,serif;
     font-size:1.3rem;
     text-align:center;
-    margin-top:-6px;   /* pull closer to title */
+    margin-top:-4px;
     margin-bottom:14px;
-    color:#6a3a2a;     /* softer accent color */
+    color:#6a3a2a;
     letter-spacing:.3px;
   }
-  
+
+  .divider{ display:flex; align-items:center; justify-content:center; margin:6px auto 18px; gap:14px; }
+  .divider .line{ height:2px; width:120px; background:linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .divider svg{ width:34px; height:34px; fill:var(--gold); filter: drop-shadow(0 0 2px rgba(212,175,55,.35)); }
+
+  .header-frame{ width:300px; margin:12px auto 26px; padding:9px; border-radius:28px; position:relative;
+    background:linear-gradient(135deg, #d4af37, #f6e8b1 40%, #d4af37);
+    box-shadow:0 10px 24px rgba(164,112,29,0.35), inset 0 1px 0 rgba(255,255,255,.6);
+  }
+  .header-frame img{ display:block; width:100%; height:auto; border-radius:22px; background:#fff; box-shadow:0 4px 18px rgba(0,0,0,.15); }
+
+  .controls{ display:grid; grid-template-columns:1fr 220px; gap:12px; margin:12px 0 20px; }
+
   input,select{
     padding:12px;
     border-radius:10px;
@@ -77,9 +68,7 @@
     font-family:Georgia,serif;
   }
   input:focus,select:focus{
-    outline:none; 
-    border-color:var(--accent);
-    box-shadow:0 0 6px var(--accent);
+    outline:none; border-color:var(--accent); box-shadow:0 0 6px var(--accent);
   }
 
   table{ width:100%; border-collapse:separate; border-spacing:0 10px; }
@@ -92,12 +81,7 @@
     text-transform:uppercase;
     border:2px solid var(--gold);
   }
-  tr{
-    background:#fffaf0;
-    border:2px solid var(--gold);
-    border-radius:12px;
-    box-shadow:0 2px 8px rgba(0,0,0,.06);
-  }
+  tr{ background:#fffaf0; border:2px solid var(--gold); border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.06); }
   tr:hover td{ background:#fff2e6; transition:0.3s; }
 
   td:first-child,th:first-child{border-radius:10px 0 0 10px;width:110px}
@@ -125,7 +109,8 @@
 <body>
   <div class="wrap">
     <h1>Vāṇi Saṃputa Lecture Catalogue</h1>
-    <!-- Decorative lotus divider replacing the old line -->
+    <p class="subtitle">His Holiness Halādhara Swāmī Mahārāja</p>
+
     <div class="divider" aria-hidden="true">
       <span class="line"></span>
       <svg viewBox="0 0 64 64" role="img" aria-label="lotus divider">
@@ -134,7 +119,6 @@
       <span class="line"></span>
     </div>
 
-    <!-- Rounded-rectangle framed image -->
     <div class="header-frame">
       <img src="assets/Gurumaharaj3.jpg" alt="Śrīla Gurumaharaj" />
     </div>
@@ -161,16 +145,15 @@
   </div>
 
   <footer>
-    All glories to Śrī Guru and Gaurāṅga 
+    All glories to Śrī Guru and Gaurāṅga
   </footer>
 
   <script>
   const CANDIDATES = ["haladhar_data.js"];
 
   function getDataset(){
-    try {
-      if (typeof lectures !== "undefined" && Array.isArray(lectures)) return lectures;
-    } catch(_) {}
+    try { if (typeof lectures !== "undefined" && Array.isArray(lectures)) return lectures; }
+    catch(_) {}
     if (Array.isArray(window.lectures)) return window.lectures;
     return null;
   }
@@ -292,6 +275,3 @@
   </script>
 </body>
 </html>
-
-
-
