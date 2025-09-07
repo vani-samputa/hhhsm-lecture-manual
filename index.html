@@ -5,84 +5,111 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Vāṇī Saṃputa — Lecture Index</title>
   <meta name="description" content="Searchable catalogue of lectures by H.H. Halādhara Swāmī Mahārāja" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <div class="brand">
-        <img src="assets/logo.png" alt="" class="logo" />
-        <div class="brand-text">
-          <h1>Vāṇī Saṃputa</h1>
-          <p>Lecture Index — H.H. Halādhara Swāmī Mahārāja</p>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="brand">
+          <div class="brand-images">
+            <img src="assets/logo.png" alt="Vāṇī Saṃputa Logo" class="logo" />
+            <img src="assets/gurudev.png" alt="H.H. Halādhara Swāmī Mahārāja" class="maharaja-portrait" />
+          </div>
+          <div class="brand-text">
+            <h1>Vāṇī Saṃputa</h1>
+            <p>H.H. Halādhara Swāmī Mahārāja</p>
+          </div>
         </div>
-      </div>
-      <div class="actions">
-        <button id="themeToggle" class="btn ghost" aria-label="Toggle theme">🌓</button>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌓</button>
       </div>
     </div>
   </header>
 
-  <main class="container">
-    <section class="panel">
-      <div class="controls">
-        <div class="field">
-          <label for="search">Search</label>
-          <input id="search" type="search" placeholder="Title, original script, or code…" autocomplete="off" />
-        </div>
+  <!-- Search Section -->
+  <section class="search-section">
+    <div class="container">
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input 
+          id="searchInput" 
+          class="search-input" 
+          type="search" 
+          placeholder="Search by code, title, or topic..."
+          autocomplete="off"
+        />
+        <button id="clearSearch" class="clear-search" aria-label="Clear search">×</button>
+      </div>
+      <div id="stats" class="stats">Loading lectures...</div>
+    </div>
+  </section>
 
-        <div class="field">
-          <label for="language">Language</label>
-          <select id="language">
-            <option value="">All</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="scripture">Series</label>
-          <select id="scripture">
-            <option value="">All</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="sort">Sort</label>
-          <select id="sort">
-            <option value="code-asc">Code ↑</option>
-            <option value="code-desc">Code ↓</option>
-            <option value="title-asc">Title A-Z</option>
-            <option value="title-desc">Title Z-A</option>
-          </select>
+  <!-- Filters Section -->
+  <section class="filters-section">
+    <div class="container">
+      <button id="filtersToggle" class="filters-toggle">
+        <span>More Filters</span>
+        <span id="filtersIcon">▼</span>
+      </button>
+      
+      <div id="filtersContent" class="filters-content">
+        <div class="filters-grid">
+          <div class="filter-group">
+            <label class="filter-label" for="languageFilter">Language</label>
+            <select id="languageFilter" class="filter-select">
+              <option value="">All Languages</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label class="filter-label" for="seriesFilter">Series</label>
+            <select id="seriesFilter" class="filter-select">
+              <option value="">All Series</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label class="filter-label" for="sortFilter">Sort By</label>
+            <select id="sortFilter" class="filter-select">
+              <option value="code-asc">Code (Low to High)</option>
+              <option value="code-desc">Code (High to Low)</option>
+              <option value="title-asc">Title (A to Z)</option>
+              <option value="title-desc">Title (Z to A)</option>
+            </select>
+          </div>
         </div>
       </div>
-      <div id="count" class="count"></div>
-    </section>
+    </div>
+  </section>
 
-    <section id="grid" class="grid" aria-live="polite" aria-busy="false"></section>
+  <!-- Results Section -->
+  <main class="results-section">
+    <div class="container">
+      <div id="grid" class="grid"></div>
+      
+      <!-- Empty State -->
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">📚</div>
+        <h3>No lectures found</h3>
+        <p>Try adjusting your search terms or filters.</p>
+      </div>
 
-    <nav id="pagination" class="pagination" aria-label="Pagination"></nav>
+      <!-- Pagination -->
+      <nav id="pagination" class="pagination" aria-label="Lecture pagination"></nav>
+    </div>
   </main>
 
-  <footer class="site-footer">
+  <!-- Footer -->
+  <footer class="footer">
     <div class="container">
-      <p>“All glories to Śrī Guru and Gaurāṅga.”</p>
-      <p class="small">Made with devotion — modern, accessible, open-source.</p>
+      <div class="footer-content">
+        <p class="footer-quote">"All glories to Śrī Guru and Gaurāṅga"</p>
+        <p class="footer-team">H.H. Haladhara Swami Media Team</p>
+      </div>
     </div>
   </footer>
-
-  <template id="card-template">
-    <article class="card">
-      <div class="code"></div>
-      <h3 class="title"></h3>
-      <p class="original"></p>
-      <div class="meta">
-        <span class="badge lang"></span>
-        <span class="badge series"></span>
-      </div>
-    </article>
-  </template>
 
   <!-- Scripts -->
   <script type="module" src="js/app.js"></script>

@@ -1,4 +1,5 @@
 /* Small utilities */
+
 export const stripDiacritics = (s = '') =>
   s.normalize ? s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : s.toLowerCase();
 
