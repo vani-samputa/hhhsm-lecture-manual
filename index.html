@@ -1,277 +1,117 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Vāṇī Saṃputa Lecture Catalogue</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- Diacritic-friendly serif fonts -->
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;700;800&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
-
-<style>
-  :root{
-    --ink:#3c2a1e; 
-    --muted:#775; 
-    --line:#e2d3c0;
-    --accent:#8b2f2a; 
-    --bg:#fdfaf4; 
-    --gold:#d4af37;
-  }
-
-  html,body{
-    margin:0; 
-    background:var(--bg) url("assets/bg.png") center/350px repeat;
-    color:var(--ink);
-    font-family:Georgia,serif;
-  }
-
-  .wrap{max-width:1200px;margin:0 auto;padding:22px}
-
-  h1{
-    font-family:"EB Garamond","Noto Serif",Georgia,serif;
-    font-weight:800;
-    text-align:center;
-    margin:16px 10px 6px;
-    font-size:2.8rem;
-    color:var(--accent);
-    letter-spacing:.2px;
-  }
-
-  .subtitle {
-    font-family:"EB Garamond","Noto Serif",Georgia,serif;
-    font-size:1.3rem;
-    text-align:center;
-    margin-top:-4px;
-    margin-bottom:14px;
-    color:#6a3a2a;
-    letter-spacing:.3px;
-  }
-
-  .divider{ display:flex; align-items:center; justify-content:center; margin:6px auto 18px; gap:14px; }
-  .divider .line{ height:2px; width:120px; background:linear-gradient(90deg, transparent, var(--gold), transparent); }
-  .divider svg{ width:34px; height:34px; fill:var(--gold); filter: drop-shadow(0 0 2px rgba(212,175,55,.35)); }
-
-  .header-frame{ width:300px; margin:12px auto 26px; padding:9px; border-radius:28px; position:relative;
-    background:linear-gradient(135deg, #d4af37, #f6e8b1 40%, #d4af37);
-    box-shadow:0 10px 24px rgba(164,112,29,0.35), inset 0 1px 0 rgba(255,255,255,.6);
-  }
-  .header-frame img{ display:block; width:100%; height:auto; border-radius:22px; background:#fff; box-shadow:0 4px 18px rgba(0,0,0,.15); }
-
-  .controls{ display:grid; grid-template-columns:1fr 220px; gap:12px; margin:12px 0 20px; }
-
-  input,select{
-    padding:12px;
-    border-radius:10px;
-    border:2px solid var(--gold);
-    background:#fffdf8;
-    font-size:15px;
-    font-family:Georgia,serif;
-  }
-  input:focus,select:focus{
-    outline:none; border-color:var(--accent); box-shadow:0 0 6px var(--accent);
-  }
-
-  table{ width:100%; border-collapse:separate; border-spacing:0 10px; }
-  th,td{ padding:12px 14px; background:#fff }
-  th{
-    background:var(--accent);
-    color:#fff;
-    font-weight:700;
-    text-align:left;
-    text-transform:uppercase;
-    border:2px solid var(--gold);
-  }
-  tr{ background:#fffaf0; border:2px solid var(--gold); border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.06); }
-  tr:hover td{ background:#fff2e6; transition:0.3s; }
-
-  td:first-child,th:first-child{border-radius:10px 0 0 10px;width:110px}
-  td:last-child,th:last-child{border-radius:0 10px 10px 0;width:160px}
-
-  .muted{color:var(--muted)}
-  .pagination{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:14px 0 6px}
-  .pagination button{padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer}
-  .pagination button.active{background:var(--accent);color:#fff;border-color:transparent}
-  .pagination .nav{font-weight:600}
-  .summary{font-size:13px;color:#555;margin:6px 2px 0;text-align:center}
-  .warn{color:#b3261e;font-weight:700;text-align:center;margin-top:10px}
-
-  footer{
-    margin-top:40px;
-    text-align:center;
-    font-family:"EB Garamond","Noto Serif",serif;
-    color:var(--accent);
-    font-size:1.1rem;
-    padding:20px 0;
-    border-top:2px solid var(--gold);
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vāṇī Saṃputa — Lecture Index</title>
+  <meta name="description" content="Searchable catalogue of lectures by H.H. Halādhara Swāmī Mahārāja" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <div class="wrap">
-    <h1>Vāṇi Saṃputa Lecture Catalogue</h1>
-    <p class="subtitle">His Holiness Halādhara Swāmī Mahārāja</p>
-
-    <div class="divider" aria-hidden="true">
-      <span class="line"></span>
-      <svg viewBox="0 0 64 64" role="img" aria-label="lotus divider">
-        <path d="M32 6c4 8 6 14 6 20 6-2 13-5 20-6-4 8-10 12-16 14 4 2 8 5 10 10-6-1-11-3-14-6 0 6-2 12-6 20-4-8-6-14-6-20-3 3-8 5-14 6 2-5 6-8 10-10-6-2-12-6-16-14 7 1 14 4 20 6 0-6 2-12 6-20z"/>
-      </svg>
-      <span class="line"></span>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="brand">
+          <div class="brand-images">
+            <img src="assets/logo.png" alt="Vāṇī Saṃputa Logo" class="logo" />
+            <img src="assets/gurudev.png" alt="H.H. Halādhara Swāmī Mahārāja" class="maharaja-portrait" />
+          </div>
+          <div class="brand-text">
+            <h1>Vāṇī Saṃputa</h1>
+            <p>H.H. Halādhara Swāmī Mahārāja</p>
+          </div>
+        </div>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌓</button>
+      </div>
     </div>
+  </header>
 
-    <div class="header-frame">
-      <img src="assets/Gurumaharaj3.jpg" alt="Śrīla Gurumaharaj" />
+  <!-- Search Section -->
+  <section class="search-section">
+    <div class="container">
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input 
+          id="searchInput" 
+          class="search-input" 
+          type="search" 
+          placeholder="Search by code, title, or topic..."
+          autocomplete="off"
+        />
+        <button id="clearSearch" class="clear-search" aria-label="Clear search">×</button>
+      </div>
+      <div id="stats" class="stats">Loading lectures...</div>
     </div>
+  </section>
 
-    <div class="controls">
-      <input id="q" placeholder="Search (Transliterated, Original, or Code)…">
-      <select id="lang">
-        <option value="">All languages</option>
-        <option>English</option><option>Hindi</option><option>Odia</option>
-      </select>
+  <!-- Filters Section -->
+  <section class="filters-section">
+    <div class="container">
+      <button id="filtersToggle" class="filters-toggle">
+        <span>More Filters</span>
+        <span id="filtersIcon">▼</span>
+      </button>
+      
+      <div id="filtersContent" class="filters-content">
+        <div class="filters-grid">
+          <div class="filter-group">
+            <label class="filter-label" for="languageFilter">Language</label>
+            <select id="languageFilter" class="filter-select">
+              <option value="">All Languages</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label class="filter-label" for="seriesFilter">Series</label>
+            <select id="seriesFilter" class="filter-select">
+              <option value="">All Series</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label class="filter-label" for="sortFilter">Sort By</label>
+            <select id="sortFilter" class="filter-select">
+              <option value="code-asc">Code (Low to High)</option>
+              <option value="code-desc">Code (High to Low)</option>
+              <option value="title-asc">Title (A to Z)</option>
+              <option value="title-desc">Title (Z to A)</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div id="warn" class="warn" style="display:none;"></div>
+  <!-- Results Section -->
+  <main class="results-section">
+    <div class="container">
+      <div id="grid" class="grid"></div>
+      
+      <!-- Empty State -->
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">📚</div>
+        <h3>No lectures found</h3>
+        <p>Try adjusting your search terms or filters.</p>
+      </div>
 
-    <table id="t">
-      <thead>
-        <tr><th>Code</th><th>Title (English transliterated)</th><th>Language</th></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+      <!-- Pagination -->
+      <nav id="pagination" class="pagination" aria-label="Lecture pagination"></nav>
+    </div>
+  </main>
 
-    <div id="pagination" class="pagination"></div>
-    <div id="summary" class="summary"></div>
-  </div>
-
-  <footer>
-    All glories to Śrī Guru and Gaurāṅga
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <p class="footer-quote">"All glories to Śrī Guru and Gaurāṅga"</p>
+        <p class="footer-team">H.H. Haladhara Swami Media Team</p>
+      </div>
+    </div>
   </footer>
 
-  <script>
-  const CANDIDATES = ["haladhar_data.js"];
-
-  function getDataset(){
-    try { if (typeof lectures !== "undefined" && Array.isArray(lectures)) return lectures; }
-    catch(_) {}
-    if (Array.isArray(window.lectures)) return window.lectures;
-    return null;
-  }
-
-  function loadDataScripts(list, onOk, onFail){
-    let i = 0;
-    function tryNext(){
-      if (i >= list.length){ onFail("Tried: " + list.join(", ")); return; }
-      const src = list[i++];
-      const s = document.createElement("script");
-      s.src = src;
-      s.onload = () => {
-        setTimeout(() => {
-          const data = getDataset();
-          if (data) { onOk(src, data); }
-          else { console.warn("Loaded", src, "but no dataset found in it."); tryNext(); }
-        }, 0);
-      };
-      s.onerror = () => { console.warn("Failed to load", src); tryNext(); };
-      document.head.appendChild(s);
-    }
-    tryNext();
-  }
-
-  function startApp(dataset){
-    const tbody = document.querySelector("#t tbody");
-    const pagin = document.getElementById("pagination");
-    const summary = document.getElementById("summary");
-    const q = document.getElementById("q");
-    const lang = document.getElementById("lang");
-    const warn = document.getElementById("warn");
-
-    const pick = r => r.title_latn || r.title_en || r.title || "";
-
-    let all = dataset.map(r => ({
-      code: String(r.code || ""),
-      title: String(pick(r)),
-      original: String(r.title_original || ""),
-      language: String(r.language || "")
-    }));
-
-    all.sort((a,b) => Number(a.code) - Number(b.code));
-    all.forEach(r => r._q = (r.code + " " + r.title + " " + r.original).toLowerCase());
-
-    const perPage = Math.max(1, Math.ceil(all.length / 10));
-    let filtered = all.slice();
-    let currentPage = 1;
-
-    function applyFilters(){
-      const needle = q.value.trim().toLowerCase();
-      const L = lang.value;
-      filtered = all.filter(r => (!L || r.language === L) && (!needle || r._q.includes(needle)));
-    }
-
-    function renderPage(page=1){
-      currentPage = page;
-      const start = (page - 1) * perPage, end = start + perPage;
-      const slice = filtered.slice(start, end);
-
-      tbody.textContent = "";
-      const frag = document.createDocumentFragment();
-      if (slice.length === 0){
-        const tr = document.createElement("tr");
-        const td = document.createElement("td");
-        td.colSpan = 3; td.className="muted"; td.textContent = "No matches.";
-        tr.appendChild(td); frag.appendChild(tr);
-      } else {
-        for (const r of slice){
-          const tr = document.createElement("tr");
-          const tdC = document.createElement("td"); tdC.textContent = r.code;
-          const tdT = document.createElement("td"); tdT.textContent = r.title;
-          const tdL = document.createElement("td"); tdL.textContent = r.language;
-          tr.append(tdC, tdT, tdL); frag.appendChild(tr);
-        }
-      }
-      tbody.appendChild(frag);
-
-      const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
-      pagin.textContent = "";
-      const addBtn = (label, target, cls="") => {
-        const b = document.createElement("button");
-        b.textContent = label; if (cls) b.className = cls;
-        b.disabled = target === currentPage || target < 1 || target > totalPages;
-        b.addEventListener("click", () => renderPage(target));
-        pagin.appendChild(b);
-      };
-      addBtn("« Prev", currentPage - 1, "nav");
-      for (let i=1; i<=totalPages; i++){
-        const b = document.createElement("button"); b.textContent = i;
-        if (i===currentPage) b.className="active";
-        b.addEventListener("click", ()=>renderPage(i)); pagin.appendChild(b);
-      }
-      addBtn("Next »", currentPage + 1, "nav");
-
-      summary.textContent = `Showing ${slice.length} of ${filtered.length} (page ${currentPage} of ${totalPages}; ${perPage} per page)`;
-      warn.style.display = "none";
-    }
-
-    function debounce(fn, ms=150){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
-    const refresh = ()=>{ applyFilters(); renderPage(1); };
-    q.addEventListener("input", debounce(refresh,150));
-    lang.addEventListener("change", refresh);
-
-    applyFilters(); renderPage(1);
-  }
-
-  function showWarn(msg){
-    const w = document.getElementById("warn");
-    w.style.display = "block";
-    w.textContent = "No dataset found: " + msg;
-  }
-
-  window.addEventListener("DOMContentLoaded", () => {
-    loadDataScripts(CANDIDATES,
-      (srcOk, data)=>{ console.log("Using", srcOk, "length:", data.length); startApp(data); },
-      (why)=>{ console.error("Dataset not found.", why); showWarn("window/const 'lectures' not defined. " + why); }
-    );
-  });
-  </script>
+  <!-- Scripts -->
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>
